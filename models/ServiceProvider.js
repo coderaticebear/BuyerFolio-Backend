@@ -1,15 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const coBuyerSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
+const serviceProvideSchema = new Schema({
+  name: {
     type: String,
   },
   email: {
@@ -26,4 +19,8 @@ const coBuyerSchema = new Schema({
     type: Date,
   },
 });
-module.exports = CoBuyer = mongoose.model("CoBuyer", coBuyerSchema);
+
+module.exports = ServiceProvider = mongoose.model(
+  "ServiceProvide",
+  serviceProvideSchema
+);

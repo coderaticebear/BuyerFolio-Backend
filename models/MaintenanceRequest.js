@@ -1,21 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const coBuyerSchema = new Schema({
+const maintenanceRequestSchema = new Schema({
+  propertyId: {
+    type: Schema.Types.ObjectId,
+    ref: "Property",
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  firstName: {
+  requestType: {
     type: String,
   },
-  lastName: {
+  description: {
     type: String,
   },
-  email: {
-    type: String,
-  },
-  phone: {
+  status: {
     type: String,
   },
   createdAt: {
@@ -26,4 +27,8 @@ const coBuyerSchema = new Schema({
     type: Date,
   },
 });
-module.exports = CoBuyer = mongoose.model("CoBuyer", coBuyerSchema);
+
+module.exports = MaintenanceRequest = mongoose.model(
+  "MaintenanceRequest",
+  maintenanceRequestSchema
+);
