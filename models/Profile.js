@@ -19,7 +19,7 @@ const profileSchema = new Schema({
     type: String,
   },
   birthDate: {
-    type: String,
+    type: Date,
   },
   createdAt: {
     type: Date,
