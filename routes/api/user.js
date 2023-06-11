@@ -5,11 +5,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
-const jsonwt = require('jsonwebtoken');
+const jsonwt = require("jsonwebtoken");
 // Load the User Model & Profile Model
 const User = require("../../models/User");
 const Profile = require("../../models/Profile");
-const settings=require("../../config/settings")
+const settings = require("../../config/settings");
 
 // Middleware for JSON parsing
 router.use(express.json());
@@ -50,7 +50,16 @@ router.post(
         });
       }
 
-      const { username, email, password, firstName, lastName, address, phone, birthDate } = req.body;
+      const {
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        address,
+        phone,
+        birthDate,
+      } = req.body;
 
       // Check if the username already exists
       const existingUser = await User.findOne({ username });
@@ -113,66 +122,71 @@ router.post(
   }
 );
 
-
 /**
  * @async
  * Login API
  */
-router.post('/login', [
-  body("username").notEmpty().trim(), // Validate that the 'username' field is not empty and trim any leading/trailing spaces
-  body("password").notEmpty() // Validate that the 'password' field is not empty
-], async (req, res) => {
-  try {
-    const errors = validationResult(req); // Retrieve the validation errors from the request
-    if (!errors.isEmpty()) { // Check if there are any validation errors
-      return res.status(400).json({
-        status: false,
-        message: "Validation error",
-        errors: errors.array() // Return the validation errors as an array
-      });
-    }
-
-    const { username, password } = req.body; // Extract the 'username' and 'password' from the request body
-    const user = await User.findOne({ username }); // Find the user with the given 'username'
-
-    if (user) { // If a user is found
-      const isPasswordCorrect = await bcrypt.compare(password, user.password); // Compare the provided password with the hashed password stored in the user object
-
-      if (isPasswordCorrect) { // If the password is correct
-        const payload = {
-          username: user.username
-        };
-
-        const token = jsonwt.sign(payload, settings.secret, {
-          expiresIn: "1h" // Generate a JWT token with the provided payload, secret, and expiration time of 1 hour
-        });
-
-        return res.status(200).json({
-          status: true,
-          token: "Bearer " + token // Return the token in the response with 'Bearer' prefix
-        });
-      } else {
-        return res.status(401).json({
+router.post(
+  "/login",
+  [
+    body("username").notEmpty().trim(), // Validate that the 'username' field is not empty and trim any leading/trailing spaces
+    body("password").notEmpty(), // Validate that the 'password' field is not empty
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req); // Retrieve the validation errors from the request
+      if (!errors.isEmpty()) {
+        // Check if there are any validation errors
+        return res.status(400).json({
           status: false,
-          message: "Incorrect password" // Return an error message indicating that the password is incorrect
+          message: "Validation error",
+          errors: errors.array(), // Return the validation errors as an array
         });
       }
-    } else {
-      return res.status(400).json({
+
+      const { username, password } = req.body; // Extract the 'username' and 'password' from the request body
+      const user = await User.findOne({ username }); // Find the user with the given 'username'
+
+      if (user) {
+        // If a user is found
+        const isPasswordCorrect = await bcrypt.compare(password, user.password); // Compare the provided password with the hashed password stored in the user object
+
+        if (isPasswordCorrect) {
+          // If the password is correct
+          const payload = {
+            username: user.username,
+          };
+
+          const token = jsonwt.sign(payload, settings.secret, {
+            expiresIn: "1h", // Generate a JWT token with the provided payload, secret, and expiration time of 1 hour
+          });
+
+          return res.status(200).json({
+            status: true,
+            token: "Bearer " + token, // Return the token in the response with 'Bearer' prefix
+          });
+        } else {
+          return res.status(401).json({
+            status: false,
+            message: "Incorrect password", // Return an error message indicating that the password is incorrect
+          });
+        }
+      } else {
+        return res.status(400).json({
+          status: false,
+          message: "User not found", // Return an error message indicating that the user was not found
+        });
+      }
+    } catch (err) {
+      // Catch any potential errors that occurred during execution
+      console.error(err);
+      return res.status(500).json({
         status: false,
-        message: "User not found" // Return an error message indicating that the user was not found
+        message: "Internal server error", // Return an error message indicating an internal server error
       });
     }
-  } catch (err) { // Catch any potential errors that occurred during execution
-    console.error(err);
-    return res.status(500).json({
-      status: false,
-      message: "Internal server error" // Return an error message indicating an internal server error
-    });
   }
-});
-
+);
 
 // Export the router
 module.exports = router;
-
