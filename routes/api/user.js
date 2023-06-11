@@ -19,22 +19,6 @@ router.get("/", (req, res) => {
   res.send("API EndPoint");
 });
 
-// Define a GET route for all other paths
-// router.get("*", (req, res) => {
-//   res.status(404).json({
-//     status: false,
-//     message: "This endpoint does not exist!",
-//   });
-// });
-
-// // Define a POST route for all paths
-// router.post("*", (req, res) => {
-//   res.status(404).json({
-//     status: false,
-//     message: "This endpoint does not exist!",
-//   });
-// });
-
 // Define a POST route for user registration
 /**
  * @async
@@ -127,6 +111,5 @@ router.post(
     }
   }
 );
-
 // Export the router
 module.exports = router;
