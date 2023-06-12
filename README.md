@@ -1,5 +1,8 @@
 # BuyerFolio-Backend
 Backend for BuyerFolio Project.
+## 1.0.3
+Added JWT authorization strategy
+Added 256-bit secret key for jwt token
 ## 1.0.2
 Added User API for Login
 ## 1.0.1
