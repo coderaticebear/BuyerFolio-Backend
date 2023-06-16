@@ -5,14 +5,29 @@ const propertySchema = new Schema({
   propertyType: {
     type: String,
   },
-  location: {
-    type: String,
+  latitude: {
+    type: Number,
+  },
+  longitude: {
+    type: Number,
   },
   isSold: {
     type: Boolean,
   },
   soldDate: {
     type: Date,
+  },
+  propertyImage: {
+    type: String
+  }, 
+  price: {
+    type: Number
+  },
+  beds: {
+    type: Number
+  },
+  bath: {
+    type: Number
   },
   createdAt: {
     type: Date,
