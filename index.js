@@ -1,4 +1,4 @@
-require('dotenv');
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const PORT = 8080;
@@ -16,6 +16,8 @@ mongoose
 
 // Use the router for handling "/user/api" routes
 app.use("/user/api", userRouter);
+app.use("/property/api", userRouter1);
+app.use("/auth/api", userRouter2);
 app.use("/cobuyer/api", cobuyerRouter);
 // Start the server
 app.listen(PORT, () => {

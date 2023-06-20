@@ -2,7 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const propertySchema = new Schema({
+  propertyID: {
+    type: Number,
+  },
   propertyType: {
+    type: String,
+  },
+  location: {
     type: String,
   },
   latitude: {
@@ -17,17 +23,35 @@ const propertySchema = new Schema({
   soldDate: {
     type: Date,
   },
+  price: {
+    type: Number,
+  },
+  price_per_sqft: {
+    type: Number,
+  },
+  emi: {
+    type: Number,
+  },
+  address: {
+    type: String,
+  },
+  no_of_bath: {
+    type: Number,
+  },
+  no_of_bed: {
+    type: Number,
+  },
+  garage: {
+    type: Boolean,
+  },
+  pool: {
+    type: Boolean,
+  },
+  primeLocations: {
+    type: Boolean,
+  },
   propertyImage: {
     type: String
-  }, 
-  price: {
-    type: Number
-  },
-  beds: {
-    type: Number
-  },
-  bath: {
-    type: Number
   },
   createdAt: {
     type: Date,
