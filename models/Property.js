@@ -11,6 +11,12 @@ const propertySchema = new Schema({
   location: {
     type: String,
   },
+  latitude: {
+    type: Number,
+  },
+  longitude: {
+    type: Number,
+  },
   isSold: {
     type: Boolean,
   },
@@ -44,6 +50,9 @@ const propertySchema = new Schema({
   primeLocations: {
     type: Boolean,
   },
+  propertyImage: {
+    type: String
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -53,4 +62,4 @@ const propertySchema = new Schema({
   },
 });
 
-module.exports = Property = mongoose.model("Property", propertySchema);
+module.exports = Property = mongoose.model('Property', propertySchema)

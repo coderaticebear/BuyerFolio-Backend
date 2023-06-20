@@ -125,8 +125,8 @@ router.get('/auth/facebook/callback',
 router.get('/address/:address', async (req, res) => {
     try {
       const address = req.params.address;
-      const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(address)}&zoom=15&size=400x400&key=AIzaSyBvK27bAAOR9XvwZryvN37GyN7FTDQ3sy0`;
-      const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${encodeURIComponent(address)}&size=400x400&key=AIzaSyBvK27bAAOR9XvwZryvN37GyN7FTDQ3sy0`;
+      const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(address)}&zoom=15&size=400x400&key=AIzaSyAXJKD-PTIHMVeEpsyUWX1NjvMwnF8Vl4w`;
+      const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${encodeURIComponent(address)}&size=400x400&key=AIzaSyAXJKD-PTIHMVeEpsyUWX1NjvMwnF8Vl4w`;
   
       // Make API requests to Google Maps API
       const [mapResponse, streetViewResponse] = await Promise.all([

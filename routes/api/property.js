@@ -65,45 +65,6 @@ router.get("/img/:id", async (req, res) => {
 //     return OTP;
 //   }
   // Send OTP route
-  router.post('/send-otp', (req, res) => {
-  const { phoneNumber } = req.body;
-
-  // Generate a random 6-digit OTP
-  const otp = Math.floor(100000 + Math.random() * 900000);
-
-    // Save the OTP in your database for verification later
-
-  // Send the OTP via SMS
-  const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-  twilioClient.messages
-    .create({
-      body: `Hi Priyanka Your OTP is ${otp}`,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: phoneNumber,
-    })
-    .then(() => {
-      res.send('OTP sent successfully');
-    })
-    .catch((error) => {
-      console.error('Error sending OTP:', error);
-      res.status(500).send('Error sending OTP');
-    });
-});
-
-// Verify OTP route
-router.post('/verify-otp', (req, res) => {
-  const { phoneNumber, otp } = req.body;
-
-  // Retrieve the saved OTP from your database for the provided phone number
-  var savedOtp = 123456; 
-  // Compare the provided OTP with the saved OTP
-  if (otp === savedOtp) {
-    // OTP is valid
-    res.send('OTP verified successfully');
-  } else {
-    // OTP is invalid
-    res.status(400).send('Invalid OTP');
-  }
-});
+  
 
 module.exports = router;
