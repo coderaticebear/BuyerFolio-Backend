@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const settings = require("./config/settings");
 const db = settings.mongoURL;
 const userRouter = require("./routes/api/user");
+const cobuyerRouter = require("./routes/api/cobuyer")
 
 // Connect to MongoDB
 mongoose
@@ -15,7 +16,7 @@ mongoose
 
 // Use the router for handling "/user/api" routes
 app.use("/user/api", userRouter);
-
+app.use("/cobuyer/api", cobuyerRouter);
 // Start the server
 app.listen(PORT, () => {
   console.log(`App running at PORT: ${PORT}`);
