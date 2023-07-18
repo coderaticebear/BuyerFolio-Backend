@@ -1,2 +1,6 @@
 node_modules
 .env
+models/PropertySearch.js    
+
+routes/api/Property.js
+

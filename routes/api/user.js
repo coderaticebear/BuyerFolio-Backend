@@ -11,9 +11,6 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const settings = require("../../config/settings");
 
-// Middleware for JSON parsing
-router.use(express.json());
-router.use(express.urlencoded());
 
 // Define a GET route for the root path
 router.get("/", (req, res) => {
