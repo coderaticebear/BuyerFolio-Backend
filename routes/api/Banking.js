@@ -33,15 +33,17 @@ router.post('/create_link_token', async function (request, response) {
       client_name: 'Plaid Test App',
       products: ['auth'],
       language: 'en',
+      webhook: 'https://sample-web-hook.com', 
       redirect_uri: 'http://localhost:8080/api/bank/',
       country_codes: ['US'],
   };
   try {
     console.log("Try")
       const createTokenResponse = await plaidClient.linkTokenCreate(plaidRequest);
-      response.json(createTokenResponse.data);
+      response.json.send(createTokenResponse.data);
   } catch (error) {
       response.status(500).send("failure");
+      console.log(error.message)
       // handle error
   }
 });

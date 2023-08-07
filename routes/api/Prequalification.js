@@ -77,27 +77,171 @@ router.post('/addData', async (req, res) => {
     }
   });
   
+  // Shared variable to hold the data
+let sharedData = {};
   
-router.post('/addData1', async (req, res) => {
+router.post('/primaryApplicant', async (req, res) => {
     try {
       const {
         firstName,
-        lastName
+        lastName,
+        email,
+        phoneNumber,
+        coBuyer,
+        agreeToPromotionalEmails,
       } = req.body;
   
-      const prequalification = new Prequalification({
+      sharedData = {
         firstName,
-        lastName
-      });
+        lastName,
+        email,
+        phoneNumber,
+        coBuyer,
+        agreeToPromotionalEmails,
+      };
   
-      await prequalification.save();
-  
-      res.status(201).json({ message: 'Prequalification added successfully.' });
+      res.status(201).json({ message: 'Primary Applicant data added successfully.' });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'An error occurred while saving the prequalification.' });
+      res.status(500).json({ message: 'An error occurred while saving the Primary Applicant.' });
     }
   });
+
+   
+router.post('/futureHome', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const { location } = req.body;
+
+  const data = {...sharedData, location};
+
+    sharedData = data;
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+
+router.post('/homeBuying', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const { lookingToBuy } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const data = {...sharedData, lookingToBuy };
+  sharedData = data;
+
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+  
+router.post('/income', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const {  grossIncome,
+            unit,
+            debt,
+            monthlyPayableAmount, } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const data = { ...sharedData,  grossIncome,
+            unit,
+            debt,
+            monthlyPayableAmount, };
+
+  sharedData = data;
+  // Save the data to the database
+  const finalData = new Prequalification(dataToSave);
+  await finalData.save();
+
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+
+router.post('/payments', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const {  downPayment } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const data = { ...sharedData, downPayment };
+
+  sharedData = data;
+
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+
+
+router.post('/source', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const {  incomeSource } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const data = { ...sharedData, incomeSource };
+
+    sharedData = data;
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+
+
+router.post('/creditScore', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const {  creditScore } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const data = { ...sharedData, creditScore };
+
+  sharedData = data;
+
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+  
+  
+router.post('/rent', async (req, res) => {
+  try {
+  // Extract data from the request body
+  const {  monthlyRent,
+    desiredRentOwnPayments } = req.body;
+
+  // Retrieve data from the shared variable and add the future home data
+  const dataToSave = { ...sharedData,  monthlyRent,
+    desiredRentOwnPayments };
+
+  console.log(dataToSave)
+  // Save the data to the database
+  const finalData = new Prequalification(dataToSave);
+  await finalData.save();
+
+    res.status(201).json({ message: 'Data added successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while saving the Future Home.' });
+  }
+});
+  
+ 
+ 
   
 
 
